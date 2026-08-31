@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Power BI (arquivos temporários do Desktop)
+*.pbix.bak
+~$*
+.pbi/localSettings.json
+.pbi/cache.abf
+
+# SO
+.DS_Store
+Thumbs.db
