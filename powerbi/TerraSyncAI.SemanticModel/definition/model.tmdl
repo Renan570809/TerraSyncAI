@@ -1,0 +1,25 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["CaminhoArquivoDados","fato_talhao_dia","dim_calendario","dim_fazenda","dim_talhao","dim_faixa_risco","dim_metricas_modelo","_Medidas"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+expression CaminhoArquivoDados = "C:\Users\SEU_USUARIO\Documents\TerraSyncAI_PowerBI\TerraSyncAI_dataset.xlsx" meta [IsParameterQuery=true, List={"C:\Users\SEU_USUARIO\Documents\TerraSyncAI_PowerBI\TerraSyncAI_dataset.xlsx"}, DefaultValueOverridesAncestors=true, IsParameterQueryRequired=true, Type="Text"]
+	lineageTag: 05612029-c25c-40df-bd02-ed10637aef78
+
+	annotation PBI_ResultType = Text
+
+ref table fato_talhao_dia
+ref table dim_calendario
+ref table dim_fazenda
+ref table dim_talhao
+ref table dim_faixa_risco
+ref table dim_metricas_modelo
+ref table _Medidas
+
