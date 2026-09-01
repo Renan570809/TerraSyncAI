@@ -7,7 +7,7 @@ Enterprise Challenge FIAP + Oracle 2026 — Grupo 59 (Data Wars), Turma 1TSCOA.
 | RM | Integrante |
 |---|---|
 | 568756 | Felipe Bezerra Ambrosio Sette |
-| 570809 | Renan Miguel Santana Oliveira da Silva (representante) |
+| 570809 | Renan Miguel Santana Oliveira da Silva |
 | 571165 | Vinicius Santos Silva |
 | 572355 | Vitor Santos Mol |
 
