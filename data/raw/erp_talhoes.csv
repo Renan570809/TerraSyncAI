@@ -1,0 +1,17 @@
+talhao_id,fazenda_id,nome_talhao,area_ha,cultura
+1,1,Lote A,297.4,Soja
+2,1,Lote B,163.3,Soja
+3,1,Lote C,310.1,Soja
+4,1,Lote D,109.6,Soja
+5,2,Lote A,90.1,Milho
+6,2,Lote B,251.8,Milho
+7,2,Lote C,323.4,Milho
+8,2,Lote D,222.6,Milho
+9,3,Lote A,174.6,Soja
+10,3,Lote B,338.0,Soja
+11,3,Lote C,223.7,Soja
+12,3,Lote D,153.2,Soja
+13,4,Lote A,114.8,Algodao
+14,4,Lote B,202.1,Algodao
+15,4,Lote C,169.9,Algodao
+16,4,Lote D,262.3,Algodao
