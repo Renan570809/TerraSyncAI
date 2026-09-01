@@ -1,0 +1,58 @@
+table dim_talhao
+	lineageTag: bcdbbd6f-fcc2-4952-8a14-a3224bbeea72
+
+	column talhao_id
+		dataType: int64
+		lineageTag: c95e9865-b3ca-4c3b-bf0a-9e010dd24972
+		summarizeBy: none
+		sourceColumn: talhao_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column fazenda_id
+		dataType: int64
+		lineageTag: 08538334-b734-4d30-8ff3-e958de33cf30
+		summarizeBy: none
+		sourceColumn: fazenda_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_talhao
+		dataType: string
+		lineageTag: 556f2b50-1772-40a3-a66a-ad7a0a31260a
+		summarizeBy: none
+		sourceColumn: nome_talhao
+
+		annotation SummarizationSetBy = Automatic
+
+	column cultura
+		dataType: string
+		lineageTag: 60353f56-e576-4a49-b911-71e3ace93df7
+		summarizeBy: none
+		sourceColumn: cultura
+
+		annotation SummarizationSetBy = Automatic
+
+	column area_ha
+		dataType: double
+		formatString: 0.00
+		lineageTag: 3cc7b257-281c-4c5f-8cee-926a89e0fb9d
+		summarizeBy: none
+		sourceColumn: area_ha
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_talhao = m
+		mode: import
+		source =
+			let
+				Origem = Excel.Workbook(File.Contents(CaminhoArquivoDados), null, true),
+				Planilha = Origem{[Item="dim_talhao",Kind="Sheet"]}[Data],
+				#"Cabecalhos Promovidos" = Table.PromoteHeaders(Planilha, [PromoteAllScalars=true]),
+				#"Tipo Alterado" = Table.TransformColumnTypes(#"Cabecalhos Promovidos", {{"talhao_id", Int64.Type}, {"fazenda_id", Int64.Type}, {"nome_talhao", type text}, {"cultura", type text}, {"area_ha", type number}})
+			in
+				#"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
