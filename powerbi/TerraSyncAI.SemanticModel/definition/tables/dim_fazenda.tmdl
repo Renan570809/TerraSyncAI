@@ -1,0 +1,41 @@
+table dim_fazenda
+	lineageTag: b8aa7023-e776-4ea2-81c8-9259e61fb3b6
+
+	column fazenda_id
+		dataType: int64
+		lineageTag: a4586b8c-9fe8-46ef-a1c4-6ce6b783d4d0
+		summarizeBy: none
+		sourceColumn: fazenda_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column fazenda_nome
+		dataType: string
+		lineageTag: afe348d8-113b-4cd5-a3e1-9f8670ca0f92
+		summarizeBy: none
+		sourceColumn: fazenda_nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column regiao
+		dataType: string
+		lineageTag: 1ef6ff3e-cde9-4cf4-b27f-5d7f42d3afb5
+		summarizeBy: none
+		sourceColumn: regiao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_fazenda = m
+		mode: import
+		source =
+			let
+				Origem = Excel.Workbook(File.Contents(CaminhoArquivoDados), null, true),
+				Planilha = Origem{[Item="dim_fazenda",Kind="Sheet"]}[Data],
+				#"Cabecalhos Promovidos" = Table.PromoteHeaders(Planilha, [PromoteAllScalars=true]),
+				#"Tipo Alterado" = Table.TransformColumnTypes(#"Cabecalhos Promovidos", {{"fazenda_id", Int64.Type}, {"fazenda_nome", type text}, {"regiao", type text}})
+			in
+				#"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
