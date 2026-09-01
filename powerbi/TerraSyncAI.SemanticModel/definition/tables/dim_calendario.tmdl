@@ -1,0 +1,68 @@
+table dim_calendario
+	lineageTag: 7b5da836-c63f-4895-acc4-254de0b67f5b
+
+	annotation __PBI_ResultType = Table
+
+	column data
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: a151c109-3897-43c5-9a1e-69d1ad0238a1
+		summarizeBy: none
+		sourceColumn: data
+
+		annotation SummarizationSetBy = Automatic
+
+	column ano
+		dataType: int64
+		lineageTag: 5f66c32b-86f2-42aa-8447-fd67ad08cb2f
+		summarizeBy: none
+		sourceColumn: ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: int64
+		lineageTag: 4f531447-9d54-44ca-ba20-be7cdb71d84d
+		summarizeBy: none
+		sourceColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_mes
+		dataType: string
+		lineageTag: 6a3f2746-7f4f-4e28-9edf-56f5687e623e
+		summarizeBy: none
+		sourceColumn: nome_mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column semana
+		dataType: int64
+		lineageTag: 9afcede5-bca9-49dd-a03e-a29b0843c10b
+		summarizeBy: none
+		sourceColumn: semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana
+		dataType: string
+		lineageTag: 432b2c07-76d0-42c2-bdbc-04130afc32f1
+		summarizeBy: none
+		sourceColumn: dia_semana
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_calendario = m
+		mode: import
+		source =
+			let
+				Origem = Excel.Workbook(File.Contents(CaminhoArquivoDados), null, true),
+				Planilha = Origem{[Item="dim_calendario",Kind="Sheet"]}[Data],
+				#"Cabecalhos Promovidos" = Table.PromoteHeaders(Planilha, [PromoteAllScalars=true]),
+				#"Tipo Alterado" = Table.TransformColumnTypes(#"Cabecalhos Promovidos", {{"data", type datetime}, {"ano", Int64.Type}, {"mes", Int64.Type}, {"nome_mes", type text}, {"semana", Int64.Type}, {"dia_semana", type text}})
+			in
+				#"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
