@@ -1,0 +1,15 @@
+relationship 8e5e8f2a-1a2b-4c3d-9e0f-1a2b3c4d5e6f
+	fromColumn: fato_talhao_dia.data
+	toColumn: dim_calendario.data
+
+relationship 7d4d7e2b-2b3c-4d4e-8e1f-2b3c4d5e6f70
+	fromColumn: fato_talhao_dia.talhao_id
+	toColumn: dim_talhao.talhao_id
+
+relationship 6c3c6d1c-3c4d-4e5f-7d2a-3c4d5e6f7081
+	fromColumn: dim_talhao.fazenda_id
+	toColumn: dim_fazenda.fazenda_id
+
+relationship 5b2b5c0d-4d5e-4f60-6c3b-4d5e6f708192
+	fromColumn: fato_talhao_dia.faixa_risco
+	toColumn: dim_faixa_risco.faixa_risco
