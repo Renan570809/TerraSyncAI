@@ -1,0 +1,7 @@
+{
+  "linhas_treino": 2064,
+  "linhas_teste": 864,
+  "precisao_alerta": 1.0,
+  "recall_alerta": 0.338,
+  "corte_temporal": "2026-07-07"
+}
