@@ -1,0 +1,58 @@
+table dim_metricas_modelo
+	lineageTag: 15d4563a-065b-402e-9394-046a149e8bde
+
+	column linhas_treino
+		dataType: int64
+		lineageTag: bf86624b-5a78-42d0-b9dd-b17975a32d26
+		summarizeBy: none
+		sourceColumn: linhas_treino
+
+		annotation SummarizationSetBy = Automatic
+
+	column linhas_teste
+		dataType: int64
+		lineageTag: 751f8b11-16b2-4734-9869-932172391243
+		summarizeBy: none
+		sourceColumn: linhas_teste
+
+		annotation SummarizationSetBy = Automatic
+
+	column precisao_alerta
+		dataType: int64
+		lineageTag: 9066f447-1e77-401f-b334-b6d42aa430a4
+		summarizeBy: none
+		sourceColumn: precisao_alerta
+
+		annotation SummarizationSetBy = Automatic
+
+	column recall_alerta
+		dataType: double
+		formatString: 0.00
+		lineageTag: 657a9133-6b84-4a22-af3b-ad779acae772
+		summarizeBy: none
+		sourceColumn: recall_alerta
+
+		annotation SummarizationSetBy = Automatic
+
+	column corte_temporal
+		dataType: string
+		lineageTag: e8c0550b-3ec8-42a0-80e8-a2cf2df5006c
+		summarizeBy: none
+		sourceColumn: corte_temporal
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_metricas_modelo = m
+		mode: import
+		source =
+			let
+				Origem = Excel.Workbook(File.Contents(CaminhoArquivoDados), null, true),
+				Planilha = Origem{[Item="dim_metricas_modelo",Kind="Sheet"]}[Data],
+				#"Cabecalhos Promovidos" = Table.PromoteHeaders(Planilha, [PromoteAllScalars=true]),
+				#"Tipo Alterado" = Table.TransformColumnTypes(#"Cabecalhos Promovidos", {{"linhas_treino", Int64.Type}, {"linhas_teste", Int64.Type}, {"precisao_alerta", Int64.Type}, {"recall_alerta", type number}, {"corte_temporal", type text}})
+			in
+				#"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
