@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "TerraSyncAI"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8bd7be1c-8432-47b8-8199-b53ce74a6d8f"
+  }
+}
