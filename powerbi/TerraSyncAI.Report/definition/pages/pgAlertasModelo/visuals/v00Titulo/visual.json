@@ -1,0 +1,37 @@
+{
+  "name": "v00Titulo",
+  "position": {
+    "x": 30,
+    "y": 12,
+    "z": 100,
+    "width": 900,
+    "height": 40,
+    "tabOrder": 100
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "TerraSync AI — Alertas e Validação do Modelo Analítico",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "16px",
+                      "color": "#2E6D6D"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json"
+}
