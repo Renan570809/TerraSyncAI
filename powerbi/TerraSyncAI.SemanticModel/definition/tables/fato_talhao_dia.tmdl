@@ -1,0 +1,183 @@
+table fato_talhao_dia
+	lineageTag: 95d6b714-102a-44a4-bc82-5f856e582557
+
+	column data
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 21f864c5-5b8d-4269-8177-22710b705039
+		summarizeBy: none
+		sourceColumn: data
+
+		annotation SummarizationSetBy = Automatic
+
+	column fazenda_id
+		dataType: int64
+		lineageTag: 50e6b6a3-9a58-41f0-9e3f-8e0cf03307f0
+		summarizeBy: none
+		sourceColumn: fazenda_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column talhao_id
+		dataType: int64
+		lineageTag: d1dee019-de18-4ec0-a3cd-baaee3731866
+		summarizeBy: none
+		sourceColumn: talhao_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cultura
+		dataType: string
+		lineageTag: ce281202-f330-45c3-b3e1-d98f8d0915a6
+		summarizeBy: none
+		sourceColumn: cultura
+
+		annotation SummarizationSetBy = Automatic
+
+	column umidade_solo_pct
+		dataType: double
+		formatString: 0.00
+		lineageTag: 9ba5b011-6b50-4255-8dbc-7bf39e5af1fb
+		summarizeBy: none
+		sourceColumn: umidade_solo_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column ph_solo
+		dataType: double
+		formatString: 0.00
+		lineageTag: fe15259c-6e68-4a29-a973-2f034eb3b928
+		summarizeBy: none
+		sourceColumn: ph_solo
+
+		annotation SummarizationSetBy = Automatic
+
+	column temperatura_solo_c
+		dataType: double
+		formatString: 0.00
+		lineageTag: a09f1af9-dccd-428b-9990-cb46ffca446b
+		summarizeBy: none
+		sourceColumn: temperatura_solo_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column chuva_mm
+		dataType: double
+		formatString: 0.00
+		lineageTag: 0ff9d859-b9e9-4672-a9b4-16d673e4338d
+		summarizeBy: none
+		sourceColumn: chuva_mm
+
+		annotation SummarizationSetBy = Automatic
+
+	column chuva_7d_mm
+		dataType: double
+		formatString: 0.00
+		lineageTag: b6f84283-424b-4dfb-a4b4-7dea829a6282
+		summarizeBy: none
+		sourceColumn: chuva_7d_mm
+
+		annotation SummarizationSetBy = Automatic
+
+	column temp_media_c
+		dataType: double
+		formatString: 0.00
+		lineageTag: c69ed70b-6005-4cb9-9b00-37b18b3c6246
+		summarizeBy: none
+		sourceColumn: temp_media_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column temp_max_c
+		dataType: double
+		formatString: 0.00
+		lineageTag: 991c8402-609e-4f80-8e12-01097071fa07
+		summarizeBy: none
+		sourceColumn: temp_max_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column custo_producao_ha
+		dataType: double
+		formatString: 0.00
+		lineageTag: 879541e8-a50e-4fba-bbd2-f9311226165b
+		summarizeBy: none
+		sourceColumn: custo_producao_ha
+
+		annotation SummarizationSetBy = Automatic
+
+	column produtividade_sc_ha
+		dataType: double
+		formatString: 0.00
+		lineageTag: 9337ef86-28a2-4f91-8aec-04d7bb8ce03d
+		summarizeBy: none
+		sourceColumn: produtividade_sc_ha
+
+		annotation SummarizationSetBy = Automatic
+
+	column receita_estimada_ha
+		dataType: double
+		formatString: 0.00
+		lineageTag: d9e03733-6010-4169-ae2f-45725b34eb77
+		summarizeBy: none
+		sourceColumn: receita_estimada_ha
+
+		annotation SummarizationSetBy = Automatic
+
+	column margem_estimada_ha
+		dataType: double
+		formatString: 0.00
+		lineageTag: 977a1c11-1b4c-484f-9ec4-106396d62488
+		summarizeBy: none
+		sourceColumn: margem_estimada_ha
+
+		annotation SummarizationSetBy = Automatic
+
+	column custo_irrigacao_estimado
+		dataType: double
+		formatString: 0.00
+		lineageTag: 946357d1-4ef1-4de5-bf28-04449f4858c6
+		summarizeBy: none
+		sourceColumn: custo_irrigacao_estimado
+
+		annotation SummarizationSetBy = Automatic
+
+	column tendencia_umidade_7d
+		dataType: double
+		formatString: 0.00
+		lineageTag: a6f55ee8-e9c0-4918-98ea-f57ad7067f2d
+		summarizeBy: none
+		sourceColumn: tendencia_umidade_7d
+
+		annotation SummarizationSetBy = Automatic
+
+	column faixa_risco
+		dataType: string
+		lineageTag: fab272a3-8e43-432f-b52f-c12840c31be4
+		summarizeBy: none
+		sourceColumn: faixa_risco
+
+		annotation SummarizationSetBy = Automatic
+
+	column sincronizado_offline
+		dataType: boolean
+		lineageTag: 627e47b0-e603-48f4-9460-4cb70991afd9
+		summarizeBy: none
+		sourceColumn: sincronizado_offline
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fato_talhao_dia = m
+		mode: import
+		source =
+			let
+				Origem = Excel.Workbook(File.Contents(CaminhoArquivoDados), null, true),
+				Planilha = Origem{[Item="fato_talhao_dia",Kind="Sheet"]}[Data],
+				#"Cabecalhos Promovidos" = Table.PromoteHeaders(Planilha, [PromoteAllScalars=true]),
+				#"Tipo Alterado" = Table.TransformColumnTypes(#"Cabecalhos Promovidos", {{"data", type datetime}, {"fazenda_id", Int64.Type}, {"talhao_id", Int64.Type}, {"cultura", type text}, {"umidade_solo_pct", type number}, {"ph_solo", type number}, {"temperatura_solo_c", type number}, {"chuva_mm", type number}, {"chuva_7d_mm", type number}, {"temp_media_c", type number}, {"temp_max_c", type number}, {"custo_producao_ha", type number}, {"produtividade_sc_ha", type number}, {"receita_estimada_ha", type number}, {"margem_estimada_ha", type number}, {"custo_irrigacao_estimado", type number}, {"tendencia_umidade_7d", type number}, {"faixa_risco", type text}, {"sincronizado_offline", type logical}})
+			in
+				#"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
