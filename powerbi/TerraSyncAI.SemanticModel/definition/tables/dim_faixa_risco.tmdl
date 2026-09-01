@@ -1,0 +1,41 @@
+table dim_faixa_risco
+	lineageTag: 9c59088b-a509-488a-a1a9-620d323bd45e
+
+	column faixa_risco
+		dataType: string
+		lineageTag: 9a99817f-5262-45e5-b3b0-7c54dadbd66e
+		summarizeBy: none
+		sourceColumn: faixa_risco
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: int64
+		lineageTag: 6fe4a489-a10f-4265-a932-0f63ff262774
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column cor_sugerida
+		dataType: string
+		lineageTag: 93a07098-afd2-46a5-9e78-974954c7bec5
+		summarizeBy: none
+		sourceColumn: cor_sugerida
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_faixa_risco = m
+		mode: import
+		source =
+			let
+				Origem = Excel.Workbook(File.Contents(CaminhoArquivoDados), null, true),
+				Planilha = Origem{[Item="dim_faixa_risco",Kind="Sheet"]}[Data],
+				#"Cabecalhos Promovidos" = Table.PromoteHeaders(Planilha, [PromoteAllScalars=true]),
+				#"Tipo Alterado" = Table.TransformColumnTypes(#"Cabecalhos Promovidos", {{"faixa_risco", type text}, {"ordem", Int64.Type}, {"cor_sugerida", type text}})
+			in
+				#"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
