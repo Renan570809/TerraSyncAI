@@ -1,0 +1,62 @@
+table _Medidas
+	lineageTag: 4a3a4b0c-5e5f-4160-8d3b-5e6f70819aab
+
+	measure 'Talhões Monitorados' = DISTINCTCOUNT(fato_talhao_dia[talhao_id])
+		formatString: #,##0
+		lineageTag: 11111111-1111-4111-8111-111111111101
+
+	measure 'Umidade Média do Solo (%)' = AVERAGE(fato_talhao_dia[umidade_solo_pct])
+		formatString: #,##0.0
+		lineageTag: 11111111-1111-4111-8111-111111111102
+
+	measure 'Dias em Alerta Alto' = CALCULATE(COUNTROWS(fato_talhao_dia), fato_talhao_dia[faixa_risco] = "Alto")
+		formatString: #,##0
+		lineageTag: 11111111-1111-4111-8111-111111111103
+
+	measure '% Dias em Alerta Alto' = DIVIDE([Dias em Alerta Alto], COUNTROWS(fato_talhao_dia))
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 11111111-1111-4111-8111-111111111104
+
+	measure 'Custo Irrigação Total (R$)' = SUM(fato_talhao_dia[custo_irrigacao_estimado])
+		formatString: "R$"\ #,##0
+		lineageTag: 11111111-1111-4111-8111-111111111105
+
+	measure 'Custo Irrigação Médio por Dia (R$)' = AVERAGE(fato_talhao_dia[custo_irrigacao_estimado])
+		formatString: "R$"\ #,##0
+		lineageTag: 11111111-1111-4111-8111-111111111106
+
+	measure 'Margem Média por Hectare (R$)' = AVERAGE(fato_talhao_dia[margem_estimada_ha])
+		formatString: "R$"\ #,##0
+		lineageTag: 11111111-1111-4111-8111-111111111107
+
+	measure 'Chuva Acumulada (mm)' = SUM(fato_talhao_dia[chuva_mm])
+		formatString: #,##0
+		lineageTag: 11111111-1111-4111-8111-111111111108
+
+	measure 'Precisão do Modelo (Alerta Alto)' = AVERAGE(dim_metricas_modelo[precisao_alerta])
+		formatString: 0%;-0%;0%
+		lineageTag: 11111111-1111-4111-8111-111111111109
+
+	measure 'Recall do Modelo (Alerta Alto)' = AVERAGE(dim_metricas_modelo[recall_alerta])
+		formatString: 0%;-0%;0%
+		lineageTag: 11111111-1111-4111-8111-11111111110a
+
+	measure 'Dias Monitorados' = COUNTROWS(fato_talhao_dia)
+		formatString: #,##0
+		lineageTag: 11111111-1111-4111-8111-11111111110c
+
+	measure 'Cor KPI Alerta' =
+			IF (
+			    [% Dias em Alerta Alto] > 0.15, "#C4433B",
+			    IF ( [% Dias em Alerta Alto] > 0.05, "#E8A33D", "#2E6D6D" )
+			)
+		lineageTag: 11111111-1111-4111-8111-11111111110b
+
+	partition _Medidas = calculated
+		mode: import
+		source = ```
+				{1}
+				```
+
+	annotation PBI_Id = 000000000000000000000000000000
+
